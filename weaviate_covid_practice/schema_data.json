@@ -1,0 +1,335 @@
+{
+    "classes": [
+        {
+            "class": "Publication",
+            "description": "A covid related academic publication",
+            "invertedIndexConfig": {
+                "bm25": {
+                    "b": 0.75,
+                    "k1": 1.2
+                },
+                "cleanupIntervalSeconds": 60,
+                "stopwords": {
+                    "additions": null,
+                    "preset": "en",
+                    "removals": null
+                }
+            },
+            "moduleConfig": {
+                "text2vec-openai": {
+                    "baseURL": "https://api.openai.com",
+                    "model": "ada",
+                    "modelVersion": "002",
+                    "type": "text",
+                    "vectorizeClassName": true
+                }
+            },
+            "multiTenancyConfig": {
+                "enabled": false
+            },
+            "properties": [
+                {
+                    "dataType": [
+                        "text"
+                    ],
+                    "description": "The title of the publication",
+                    "indexFilterable": true,
+                    "indexSearchable": true,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "title",
+                    "tokenization": "word"
+                },
+                {
+                    "dataType": [
+                        "text"
+                    ],
+                    "description": "The abstract of the publication",
+                    "indexFilterable": true,
+                    "indexSearchable": true,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "abstract",
+                    "tokenization": "word"
+                },
+                {
+                    "dataType": [
+                        "Author"
+                    ],
+                    "description": "The authors this publication has",
+                    "indexFilterable": true,
+                    "indexSearchable": false,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "hasAuthors"
+                },
+                {
+                    "dataType": [
+                        "Journal"
+                    ],
+                    "description": "The journal this was published in",
+                    "indexFilterable": true,
+                    "indexSearchable": false,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "inJournal"
+                }
+            ],
+            "replicationConfig": {
+                "factor": 1
+            },
+            "shardingConfig": {
+                "virtualPerPhysical": 128,
+                "desiredCount": 1,
+                "actualCount": 1,
+                "desiredVirtualCount": 128,
+                "actualVirtualCount": 128,
+                "key": "_id",
+                "strategy": "hash",
+                "function": "murmur3"
+            },
+            "vectorIndexConfig": {
+                "skip": false,
+                "cleanupIntervalSeconds": 300,
+                "maxConnections": 64,
+                "efConstruction": 128,
+                "ef": -1,
+                "dynamicEfMin": 100,
+                "dynamicEfMax": 500,
+                "dynamicEfFactor": 8,
+                "vectorCacheMaxObjects": 1000000000000,
+                "flatSearchCutoff": 40000,
+                "distance": "cosine",
+                "pq": {
+                    "enabled": false,
+                    "bitCompression": false,
+                    "segments": 0,
+                    "centroids": 256,
+                    "trainingLimit": 100000,
+                    "encoder": {
+                        "type": "kmeans",
+                        "distribution": "log-normal"
+                    }
+                }
+            },
+            "vectorIndexType": "hnsw",
+            "vectorizer": "text2vec-openai"
+        },
+        {
+            "class": "Author",
+            "description": "An academic author of a covid related publication",
+            "invertedIndexConfig": {
+                "bm25": {
+                    "b": 0.75,
+                    "k1": 1.2
+                },
+                "cleanupIntervalSeconds": 60,
+                "stopwords": {
+                    "additions": null,
+                    "preset": "en",
+                    "removals": null
+                }
+            },
+            "moduleConfig": {
+                "text2vec-openai": {
+                    "baseURL": "https://api.openai.com",
+                    "model": "ada",
+                    "modelVersion": "002",
+                    "type": "text",
+                    "vectorizeClassName": true
+                }
+            },
+            "multiTenancyConfig": {
+                "enabled": false
+            },
+            "properties": [
+                {
+                    "dataType": [
+                        "text"
+                    ],
+                    "description": "The name of the author",
+                    "indexFilterable": true,
+                    "indexSearchable": true,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "name",
+                    "tokenization": "whitespace"
+                },
+                {
+                    "dataType": [
+                        "Publication"
+                    ],
+                    "description": "The publications of the author",
+                    "indexFilterable": true,
+                    "indexSearchable": false,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "wrotePublication"
+                }
+            ],
+            "replicationConfig": {
+                "factor": 1
+            },
+            "shardingConfig": {
+                "virtualPerPhysical": 128,
+                "desiredCount": 1,
+                "actualCount": 1,
+                "desiredVirtualCount": 128,
+                "actualVirtualCount": 128,
+                "key": "_id",
+                "strategy": "hash",
+                "function": "murmur3"
+            },
+            "vectorIndexConfig": {
+                "skip": false,
+                "cleanupIntervalSeconds": 300,
+                "maxConnections": 64,
+                "efConstruction": 128,
+                "ef": -1,
+                "dynamicEfMin": 100,
+                "dynamicEfMax": 500,
+                "dynamicEfFactor": 8,
+                "vectorCacheMaxObjects": 1000000000000,
+                "flatSearchCutoff": 40000,
+                "distance": "cosine",
+                "pq": {
+                    "enabled": false,
+                    "bitCompression": false,
+                    "segments": 0,
+                    "centroids": 256,
+                    "trainingLimit": 100000,
+                    "encoder": {
+                        "type": "kmeans",
+                        "distribution": "log-normal"
+                    }
+                }
+            },
+            "vectorIndexType": "hnsw",
+            "vectorizer": "text2vec-openai"
+        },
+        {
+            "class": "Journal",
+            "description": "An academic journal",
+            "invertedIndexConfig": {
+                "bm25": {
+                    "b": 0.75,
+                    "k1": 1.2
+                },
+                "cleanupIntervalSeconds": 60,
+                "stopwords": {
+                    "additions": null,
+                    "preset": "en",
+                    "removals": null
+                }
+            },
+            "moduleConfig": {
+                "text2vec-openai": {
+                    "baseURL": "https://api.openai.com",
+                    "model": "ada",
+                    "modelVersion": "002",
+                    "type": "text",
+                    "vectorizeClassName": true
+                }
+            },
+            "multiTenancyConfig": {
+                "enabled": false
+            },
+            "properties": [
+                {
+                    "dataType": [
+                        "text"
+                    ],
+                    "description": "The name of the Journal",
+                    "indexFilterable": true,
+                    "indexSearchable": true,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "name",
+                    "tokenization": "whitespace"
+                },
+                {
+                    "dataType": [
+                        "Publication"
+                    ],
+                    "description": "The publications in the journal",
+                    "indexFilterable": true,
+                    "indexSearchable": false,
+                    "moduleConfig": {
+                        "text2vec-openai": {
+                            "skip": false,
+                            "vectorizePropertyName": false
+                        }
+                    },
+                    "name": "hasPublication"
+                }
+            ],
+            "replicationConfig": {
+                "factor": 1
+            },
+            "shardingConfig": {
+                "virtualPerPhysical": 128,
+                "desiredCount": 1,
+                "actualCount": 1,
+                "desiredVirtualCount": 128,
+                "actualVirtualCount": 128,
+                "key": "_id",
+                "strategy": "hash",
+                "function": "murmur3"
+            },
+            "vectorIndexConfig": {
+                "skip": false,
+                "cleanupIntervalSeconds": 300,
+                "maxConnections": 64,
+                "efConstruction": 128,
+                "ef": -1,
+                "dynamicEfMin": 100,
+                "dynamicEfMax": 500,
+                "dynamicEfFactor": 8,
+                "vectorCacheMaxObjects": 1000000000000,
+                "flatSearchCutoff": 40000,
+                "distance": "cosine",
+                "pq": {
+                    "enabled": false,
+                    "bitCompression": false,
+                    "segments": 0,
+                    "centroids": 256,
+                    "trainingLimit": 100000,
+                    "encoder": {
+                        "type": "kmeans",
+                        "distribution": "log-normal"
+                    }
+                }
+            },
+            "vectorIndexType": "hnsw",
+            "vectorizer": "text2vec-openai"
+        }
+    ]
+}
